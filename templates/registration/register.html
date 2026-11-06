@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Create an account — Opportunity{% endblock %}
+{% block content %}
+<section class="auth-section container">
+  <div class="auth-card">
+    <p class="eyebrow">Get started</p><h1>Create your account</h1>
+    <p class="muted">Choose how you would like to use Opportunity. You can apply as a job seeker or post jobs as an employer.</p>
+    <form method="post">
+      {% csrf_token %}
+      {% include "jobs/form_fields.html" with form=form %}
+      <button class="button button-full" type="submit">Create account</button>
+    </form>
+    <p class="auth-switch">Already registered? <a href="{% url 'login' %}">Log in</a></p>
+  </div>
+</section>
+{% endblock %}

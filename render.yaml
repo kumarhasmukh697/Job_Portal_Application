@@ -1,0 +1,23 @@
+databases:
+  - name: job-portal-db
+    plan: free
+    databaseName: job_portal
+    user: job_portal
+
+services:
+  - type: web
+    name: job-portal
+    runtime: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn config.wsgi:application
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: job-portal-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"

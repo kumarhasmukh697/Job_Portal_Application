@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ heading }} — Opportunity{% endblock %}
+{% block content %}
+<section class="auth-section container">
+  <div class="auth-card wide-card">
+    <a class="back-link" href="{% url 'employer_jobs' %}">← Back to your listings</a>
+    <p class="eyebrow">Employer workspace</p><h1>{{ heading }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {% include "jobs/form_fields.html" with form=form %}
+      <button class="button button-full" type="submit">Save job listing</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

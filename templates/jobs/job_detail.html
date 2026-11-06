@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} at {{ job.company }} — Opportunity{% endblock %}
+{% block content %}
+<section class="section container detail-layout">
+  <div class="detail-main">
+    <a class="back-link" href="{% url 'job_list' %}">← Back to jobs</a>
+    <div class="detail-heading">
+      <span class="category-pill">{{ job.category }}</span>
+      <h1>{{ job.title }}</h1>
+      <p class="company-name large">{{ job.company }}</p>
+      <div class="job-meta"><span>⌖ {{ job.location }}</span>{% if job.salary %}<span>${{ job.salary|floatformat:0 }} / year</span>{% endif %}<span>Posted {{ job.created_at|date:"M j, Y" }}</span></div>
+    </div>
+    <div class="description-block"><h2>About this role</h2><div class="description-text">{{ job.description|linebreaks }}</div></div>
+  </div>
+  <aside class="apply-card">
+    <p class="eyebrow">Take the next step</p>
+    <h2>Interested in this role?</h2>
+    {% if already_applied %}
+      <div class="message message-success">You have already applied for this job.</div>
+    {% elif user.is_authenticated and user.role == "seeker" %}
+      <form method="post">
+        {% csrf_token %}
+        {% include "jobs/form_fields.html" with form=form %}
+        <button class="button button-full" type="submit">Submit application</button>
+      </form>
+    {% elif user.is_authenticated %}
+      <p class="muted">Employer accounts cannot apply for jobs.</p>
+    {% else %}
+      <p class="muted">Log in or create a job seeker account to apply.</p>
+      <a class="button button-full" href="{% url 'login' %}?next={{ request.path }}">Log in to apply</a>
+      <a class="text-link centered" href="{% url 'register' %}">Create a job seeker account</a>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}

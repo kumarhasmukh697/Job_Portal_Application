@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Applicants — Opportunity{% endblock %}
+{% block content %}
+<section class="section container">
+  <div class="section-heading"><div><p class="eyebrow">Employer workspace</p><h1>Applicants</h1><p class="muted">Review applications to the jobs you have posted.</p></div><a class="button button-outline" href="{% url 'employer_jobs' %}">Manage listings</a></div>
+  {% if applications %}
+    <div class="table-wrap"><table><thead><tr><th>Applicant</th><th>Job</th><th>Cover letter</th><th>Applied</th><th>Status</th></tr></thead><tbody>
+      {% for application in applications %}
+        <tr><td><strong>{{ application.applicant.username }}</strong><small>{{ application.applicant.email }}</small></td><td>{{ application.job.title }}</td><td class="cover-letter">{{ application.cover_letter|default:"No cover letter provided"|linebreaksbr }}</td><td>{{ application.submitted_at|date:"M j, Y" }}</td><td><form method="post" action="{% url 'application_update' application.pk %}" class="status-form">{% csrf_token %}<select name="status" aria-label="Application status"><option value="pending"{% if application.status == "pending" %} selected{% endif %}>Pending</option><option value="reviewed"{% if application.status == "reviewed" %} selected{% endif %}>Reviewed</option><option value="rejected"{% if application.status == "rejected" %} selected{% endif %}>Rejected</option></select><button class="button button-small" type="submit">Save</button></form></td></tr>
+      {% endfor %}
+    </tbody></table></div>
+  {% else %}
+    <div class="empty-state"><span class="empty-icon">◎</span><h3>No applicants just yet</h3><p>Applications will appear here once people apply to your job listings.</p><a class="button" href="{% url 'employer_jobs' %}">View your listings</a></div>
+  {% endif %}
+</section>
+{% endblock %}

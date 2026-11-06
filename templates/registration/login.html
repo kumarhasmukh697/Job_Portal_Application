@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Log in — Opportunity{% endblock %}
+{% block content %}
+<section class="auth-section container">
+  <div class="auth-card">
+    <p class="eyebrow">Welcome back</p><h1>Log in to your account</h1>
+    {% if form.errors %}<div class="message message-error">Your username or password was not correct. Please try again.</div>{% endif %}
+    <form method="post">
+      {% csrf_token %}
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+      {% include "jobs/form_fields.html" with form=form %}
+      <button class="button button-full" type="submit">Log in</button>
+    </form>
+    <p class="auth-switch">New to Opportunity? <a href="{% url 'register' %}">Create an account</a></p>
+  </div>
+</section>
+{% endblock %}

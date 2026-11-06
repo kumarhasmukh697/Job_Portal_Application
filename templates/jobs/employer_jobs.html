@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Your job listings — Opportunity{% endblock %}
+{% block content %}
+<section class="section container">
+  <div class="section-heading">
+    <div><p class="eyebrow">Employer workspace</p><h1>Your job listings</h1><p class="muted">Create and keep track of the roles you have posted.</p></div>
+    <a class="button" href="{% url 'job_create' %}">＋ Post a job</a>
+  </div>
+  {% if jobs %}
+    <div class="table-wrap"><table><thead><tr><th>Job title</th><th>Location</th><th>Applications</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+      {% for job in jobs %}
+        <tr><td><strong>{{ job.title }}</strong><small>{{ job.company }} · {{ job.created_at|date:"M j, Y" }}</small></td><td>{{ job.location }}</td><td>{{ job.applications.count }}</td><td><span class="status-pill {% if job.is_active %}status-active{% else %}status-inactive{% endif %}">{% if job.is_active %}Active{% else %}Closed{% endif %}</span></td><td><a class="text-link" href="{% url 'job_edit' job.pk %}">Edit</a><form method="post" action="{% url 'job_delete' job.pk %}" class="inline-form delete-form">{% csrf_token %}<button class="link-button danger-link" type="submit">Delete</button></form></td></tr>
+      {% endfor %}
+    </tbody></table></div>
+  {% else %}
+    <div class="empty-state"><span class="empty-icon">＋</span><h3>Your first listing is one click away</h3><p>Post a role and start meeting qualified candidates.</p><a class="button" href="{% url 'job_create' %}">Post your first job</a></div>
+  {% endif %}
+</section>
+{% endblock %}

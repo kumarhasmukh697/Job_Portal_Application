@@ -17,7 +17,7 @@ This project is suitable as a learning project and can be deployed to Render.
 ## Technology
 
 - **Django** serves the pages and handles accounts, forms, and application logic.
-- **PostgreSQL** stores your data when `DATABASE_URL` is configured. SQLite is used for local development if it is not.
+- **PostgreSQL** stores your data in local development and production.
 - **HTML, CSS, and JavaScript** provide the responsive user interface.
 - **Gunicorn** runs the Django app on Render, and **WhiteNoise** serves its static files.
 
@@ -41,22 +41,24 @@ You will need Python 3.10 or newer and pip.
    python -m pip install -r requirements.txt
    ```
 
-4. Create the database tables and an administrator account:
+4. Copy `.env.example` to `.env` and set your PostgreSQL credentials and a secret `SECRET_KEY`. The `.env` file is ignored by Git and loaded automatically by Django. Make sure PostgreSQL is running and the database exists.
+
+5. Create the database tables and an administrator account:
 
    ```shell
    python manage.py migrate
    python manage.py createsuperuser
    ```
 
-5. Start the development server:
+6. Start the development server:
 
    ```shell
    python manage.py runserver
    ```
 
-6. Visit `http://127.0.0.1:8000/`. The admin area is at `http://127.0.0.1:8000/admin/`.
+7. Visit `http://127.0.0.1:8000/`. The admin area is at `http://127.0.0.1:8000/admin/`.
 
-For local development, the project uses SQLite automatically. To use a local PostgreSQL database instead, set `DATABASE_URL` to its connection URL before running Django.
+You can configure the database either with the `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`, and `POSTGRES_PORT` variables shown in `.env.example`, or by setting `DATABASE_URL`. `DATABASE_URL` takes precedence when present.
 
 ## Deploy to Render
 

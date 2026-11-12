@@ -1,6 +1,6 @@
-# Opportunity — Job Portal
+# NaukriNova — Job Portal
 
-Opportunity is a small job portal built with **HTML, CSS, JavaScript, Python, Django, and PostgreSQL**. Job seekers can find jobs and apply. Employers can publish listings and review applicants. A site administrator can manage users, jobs, and applications through Django's admin area.
+NaukriNova is a small job portal built with **HTML, CSS, JavaScript, Python, Django, and PostgreSQL**. Job seekers can find jobs and apply. Employers can publish listings and review applicants. A site administrator can manage users, jobs, and applications through Django's admin area.
 
 This project is suitable as a learning project and can be deployed to Render.
 
